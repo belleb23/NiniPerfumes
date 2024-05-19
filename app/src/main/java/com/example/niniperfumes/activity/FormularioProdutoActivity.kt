@@ -7,10 +7,5 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.niniperfumes.R
 
-class FormularioProdutoActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_formulario_produto)
-
-    }
+class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario_produto) {
 }
