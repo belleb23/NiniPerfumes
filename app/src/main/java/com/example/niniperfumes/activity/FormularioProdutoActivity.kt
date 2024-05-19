@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.niniperfumes.R
+import com.example.niniperfumes.dao.ProdutosDao
 import com.example.niniperfumes.model.Produto
 import java.math.BigDecimal
 
@@ -39,6 +40,11 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
             )
 
             Log.i("FormularioProduto", "onCreate: $produtoNovo")
+            val dao = ProdutosDao()
+            ProdutosDao().adiciona(produtoNovo)
+            Log.i("FormularioProduto", "onCreate: ${dao.buscaTodos()}")
+            finish()
+
         }
     }
 
