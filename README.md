@@ -1,6 +1,6 @@
 # NiniPerfumes
 
-App de catálogo de Perfumes
+Aplicativo de catálogo de Perfumes
 
 ## Funcionalidades
 
