@@ -2,6 +2,9 @@
 
 Aplicativo de catálogo de Perfumes
 
+![Banner de Belle Bernieri](https://github.com/belleb23/NiniPerfumes/assets/115180927/08a8f668-d9ba-463c-8e3c-b01747d124cc)
+
+
 ## Funcionalidades
 
 Nesta versão o App possui :
