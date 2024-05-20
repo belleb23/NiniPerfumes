@@ -2,7 +2,7 @@
 
 Aplicativo de catálogo de Perfumes
 
-<img src="https://github.com/belleb23/NiniPerfumes/assets/115180927/08a8f668-d9ba-463c-8e3c-b01747d124cc" alt="Banner" width="300" height="700"/>
+<img src="" alt="Gif App" width="300" height="700"/>
 
 ## Funcionalidades
 
