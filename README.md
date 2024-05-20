@@ -8,8 +8,8 @@ Aplicativo de catálogo de Perfumes
 
 Nesta versão o App possui :
  
-- Listagem de produtos
-- Cadastro de produtos
+- Listagem de perfumes
+- Cadastro de perfumes
 
 ## Tecnologias no projeto 
 
