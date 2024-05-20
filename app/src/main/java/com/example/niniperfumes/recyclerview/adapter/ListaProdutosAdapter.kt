@@ -2,35 +2,29 @@ package com.example.niniperfumes.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.niniperfumes.R
+import com.example.niniperfumes.databinding.ProductItemBinding
 import com.example.niniperfumes.model.Produto
-
 
 class ListaProdutosAdapter(
     private val context: Context,
-    produtos : List<Produto>
+    produtos: List<Produto>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
     private val produtos = produtos.toMutableList()
-    class ViewHolder (view : View): RecyclerView.ViewHolder(view) {
+
+    class ViewHolder(private val binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun vincula(produto: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.activity_formulario_produto_nome)
-            nome.text = produto.nome
-            val descricao = itemView.findViewById<TextView>(R.id.activity_formulario_produto_descricao)
-            descricao.text = produto.descricao
-            val valor = itemView.findViewById<TextView>(R.id.activity_formulario_produto_valor)
-            valor.text = produto.valor.toPlainString()
+            binding.productItemNome.text = produto.nome
+            binding.productItemDescricao.text = produto.descricao
+            binding.productItemValor.text = produto.valor.toPlainString()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.product_item, parent, false)
-        return ViewHolder(view)
+        val binding = ProductItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = produtos.size
@@ -45,6 +39,4 @@ class ListaProdutosAdapter(
         this.produtos.addAll(produtos)
         notifyDataSetChanged()
     }
-
-
 }
