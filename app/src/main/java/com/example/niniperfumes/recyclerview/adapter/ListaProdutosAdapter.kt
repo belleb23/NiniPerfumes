@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.niniperfumes.databinding.ProductItemBinding
 import com.example.niniperfumes.model.Produto
+import java.math.BigDecimal
+import java.text.NumberFormat
+import java.util.Locale
 
 class ListaProdutosAdapter(
     private val context: Context,
@@ -18,7 +21,15 @@ class ListaProdutosAdapter(
         fun vincula(produto: Produto) {
             binding.productItemNome.text = produto.nome
             binding.productItemDescricao.text = produto.descricao
-            binding.productItemValor.text = produto.valor.toPlainString()
+            val valor = binding.productItemValor
+            val valorEmMoeda: String = formataParaMoedaBrasileira(produto.valor)
+            valor.text = valorEmMoeda
+        }
+
+        private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
+            val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
+            val valorEmMoeda: String = formatador.format(valor)
+            return valorEmMoeda
         }
     }
 
