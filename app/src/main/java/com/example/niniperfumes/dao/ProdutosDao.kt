@@ -1,6 +1,7 @@
 package com.example.niniperfumes.dao
 
 import com.example.niniperfumes.model.Produto
+import java.math.BigDecimal
 
 class ProdutosDao {
 
@@ -13,6 +14,8 @@ class ProdutosDao {
     }
 
     companion object {
-        private val produtos = mutableListOf<Produto>()
+        private val produtos = mutableListOf<Produto>(
+            Produto(nome = "Hipnotic", descricao = "doce", valor = BigDecimal("450.00"))
+        )
     }
 }
