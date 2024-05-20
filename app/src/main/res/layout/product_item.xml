@@ -58,9 +58,10 @@
             tools:text="19.99"
             />
 
+
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:scaleType="centerCrop"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +69,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/product_item_nome"
             app:srcCompat="@drawable/perfume1"
-            tools:srcCompat="@drawable/perfume1" />
+            tools:srcCompat="@drawable/perfume1"
+            app:layout_constraintWidth_percent="0.3"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
