@@ -8,32 +8,35 @@ import com.example.niniperfumes.dao.ProdutosDao
 import com.example.niniperfumes.databinding.ActivityFormularioProdutoBinding
 import com.example.niniperfumes.model.Produto
 import java.math.BigDecimal
+import coil.load
+import com.example.niniperfumes.databinding.FormularioImagemBinding
+import com.example.niniperfumes.dialog.FormularioImagemDialog
+import com.example.niniperfumes.extensions.tentaCarregarImagem
 
 class FormularioProdutoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityFormularioProdutoBinding
+    private val binding by lazy {
+        ActivityFormularioProdutoBinding.inflate(layoutInflater)
+    }
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFormularioProdutoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         configuraBotaoSalvar()
-        binding.activityFormularioProdutoImagem.setOnClickListener{
-            AlertDialog.Builder(this)
-                .setView(R.layout.formulario_imagem)
-                .setPositiveButton("Confirmar") { _, _ ->
-
-                }
-                .setNegativeButton("Cancelar") { _, _ ->
-
-                }
-                .show()
+        binding.activityFormularioProdutoImagem.setOnClickListener {
+            FormularioImagemDialog(this).mostra(url){
+                imagem ->
+                url = imagem
+                binding.activityFormularioProdutoImagem.tentaCarregarImagem(url)
+            }
         }
     }
 
     private fun configuraBotaoSalvar() {
+        val botaoSalvar = binding.activityFormularioProdutoBotaoSalvar
         val dao = ProdutosDao()
-        binding.activityFormularioProdutoBotaoSalvar.setOnClickListener {
+        botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
             dao.adiciona(produtoNovo)
             finish()
@@ -41,9 +44,12 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private fun criaProduto(): Produto {
-        val nome = binding.activityFormularioProdutoNome.text.toString()
-        val descricao = binding.activityFormularioProdutoDescricao.text.toString()
-        val valorEmTexto = binding.activityFormularioProdutoValor.text.toString()
+        val campoNome = binding.activityFormularioProdutoNome
+        val nome = campoNome.text.toString()
+        val campoDescricao = binding.activityFormularioProdutoDescricao
+        val descricao = campoDescricao.text.toString()
+        val campoValor = binding.activityFormularioProdutoValor
+        val valorEmTexto = campoValor.text.toString()
         val valor = if (valorEmTexto.isBlank()) {
             BigDecimal.ZERO
         } else {
@@ -53,7 +59,9 @@ class FormularioProdutoActivity : AppCompatActivity() {
         return Produto(
             nome = nome,
             descricao = descricao,
-            valor = valor
+            valor = valor,
+            imagem = url
         )
     }
+
 }
