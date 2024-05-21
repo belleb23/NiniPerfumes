@@ -2,7 +2,9 @@ package com.example.niniperfumes.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.niniperfumes.R
 import com.example.niniperfumes.dao.ProdutosDao
 import com.example.niniperfumes.databinding.ActivityListaProdutosBinding
 import com.example.niniperfumes.recyclerview.adapter.ListaProdutosAdapter
@@ -19,6 +21,7 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
+
     }
 
     override fun onResume() {

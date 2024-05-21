@@ -1,7 +1,9 @@
 package com.example.niniperfumes.activity
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.niniperfumes.R
 import com.example.niniperfumes.dao.ProdutosDao
 import com.example.niniperfumes.databinding.ActivityFormularioProdutoBinding
 import com.example.niniperfumes.model.Produto
@@ -16,6 +18,17 @@ class FormularioProdutoActivity : AppCompatActivity() {
         binding = ActivityFormularioProdutoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         configuraBotaoSalvar()
+        binding.activityFormularioProdutoImagem.setOnClickListener{
+            AlertDialog.Builder(this)
+                .setView(R.layout.formulario_imagem)
+                .setPositiveButton("Confirmar") { _, _ ->
+
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+
+                }
+                .show()
+        }
     }
 
     private fun configuraBotaoSalvar() {
