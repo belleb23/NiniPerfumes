@@ -19,7 +19,10 @@ Nesta versão o App possui :
     - ConstraintLayout
     - TextView
     - RecyclerView
+    - CardView
     - EditText
     - Button
-- Binding de View
-- Listener de clique
+- View Binding
+- Listener click
+- AlertDialog
+- Coil
