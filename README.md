@@ -1,17 +1,17 @@
 # NiniPerfumes
 
-Aplicativo de catálogo de Perfumes
+Perfume catalog application
 
-<img src="https://github.com/belleb23/NiniPerfumes/assets/115180927/d90f6f31-26e5-4cd8-9451-14f945fd721d" alt="Gif App" width="300" height="700"/>
+<img src="https://github.com/belleb23/NiniPerfumes/assets/115180927/f525cd23-da46-4146-abbd-7e50162554fc" alt="Gif App" width="300" height="700"/>
 
-## Funcionalidades
+## Functionalities
 
-Nesta versão o App possui :
+In this version the App has:
  
-- Listagem de perfumes
-- Cadastro de perfumes
+- List of perfumes
+- Perfume registration
 
-## Tecnologias no projeto 
+## Project technologies
 
 - Kotlin
 - Activities
