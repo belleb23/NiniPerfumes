@@ -1,15 +1,11 @@
 package com.example.niniperfumes.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.niniperfumes.R
-import com.example.niniperfumes.dao.ProdutosDao
 import com.example.niniperfumes.databinding.ActivityFormularioProdutoBinding
 import com.example.niniperfumes.model.Produto
 import java.math.BigDecimal
-import coil.load
-import com.example.niniperfumes.databinding.FormularioImagemBinding
+import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.dialog.FormularioImagemDialog
 import com.example.niniperfumes.extensions.tentaCarregarImagem
 
@@ -37,10 +33,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     private fun configuraBotaoSalvar() {
         val botaoSalvar = binding.activityFormularioProdutoBotaoSalvar
-        val dao = ProdutosDao()
+        val db = AppDatabase.instancia(this)
+        val produtoDao = db.produtoDao()
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            dao.adiciona(produtoNovo)
+            produtoDao.salva(produtoNovo)
             finish()
         }
     }

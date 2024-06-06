@@ -2,18 +2,17 @@ package com.example.niniperfumes.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.niniperfumes.R
-import com.example.niniperfumes.dao.ProdutosDao
+import androidx.room.Room
+import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.databinding.ActivityListaProdutosBinding
 import com.example.niniperfumes.recyclerview.adapter.ListaProdutosAdapter
+
 
 class ListaProdutosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListaProdutosBinding
-    private val dao = ProdutosDao()
-    private val adapter = ListaProdutosAdapter(this, produtos = dao.buscaTodos())
+    private val adapter = ListaProdutosAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +20,13 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
-
     }
 
     override fun onResume() {
         super.onResume()
-        adapter.atualiza(dao.buscaTodos())
+        val db = AppDatabase.instancia(this)
+        val produtoDao = db.produtoDao()
+        adapter.atualiza(produtoDao.buscaTodos())
     }
 
     private fun configuraFab() {
