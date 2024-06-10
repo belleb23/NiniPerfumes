@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
 }
 
+
 android {
     namespace = "com.example.niniperfumes"
     compileSdk = 34
@@ -17,6 +18,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
     }
 
     buildTypes {
@@ -39,6 +46,7 @@ android {
     viewBinding{
         enable = true
     }
+
 }
 
 dependencies {
@@ -57,4 +65,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation("io.coil-kt:coil-compose:2.6.0")
+
 }

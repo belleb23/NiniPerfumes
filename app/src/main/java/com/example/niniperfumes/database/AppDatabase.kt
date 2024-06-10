@@ -9,7 +9,7 @@ import com.example.niniperfumes.database.converter.Converters
 import com.example.niniperfumes.database.dao.ProdutoDao
 import com.example.niniperfumes.model.Produto
 
-@Database(entities = [Produto::class], version = 1, exportSchema = false)
+@Database(entities = [Produto::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun produtoDao(): ProdutoDao
