@@ -2,12 +2,16 @@ package com.example.niniperfumes.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.niniperfumes.databinding.ActivityFormularioProdutoBinding
 import com.example.niniperfumes.model.Produto
 import java.math.BigDecimal
 import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.dialog.FormularioImagemDialog
 import com.example.niniperfumes.extensions.tentaCarregarImagem
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import com.example.niniperfumes.database.dao.ProdutoDao
 
 class FormularioProdutoActivity : AppCompatActivity() {
 
@@ -15,46 +19,68 @@ class FormularioProdutoActivity : AppCompatActivity() {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
     private var url: String? = null
-    private var idProduto = 0L
+    private var produtoId = 0L
+    private val produtoDao: ProdutoDao by lazy {
+        val db = AppDatabase.instancia(this)
+        db.produtoDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        title = "Cadastrar Perfume"
-
+        title = "Cadastrar produto"
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem.setOnClickListener {
-            FormularioImagemDialog(this).mostra(url){
-                imagem ->
-                url = imagem
-                binding.activityFormularioProdutoImagem.tentaCarregarImagem(url)
+            FormularioImagemDialog(this)
+                .mostra(url) { imagem ->
+                    url = imagem
+                    binding.activityFormularioProdutoImagem.tentaCarregarImagem(url)
+                }
+        }
+        tentaCarregarProduto()
+    }
+
+    private fun tentaCarregarProduto() {
+        produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tentaBuscarProduto()
+    }
+
+    private fun tentaBuscarProduto() {
+        lifecycleScope.launch {
+            produtoDao.buscaPorId(produtoId).collect {
+                it?.let { produtoEncontrado ->
+                    title = "Alterar produto"
+                    preencheCampos(produtoEncontrado)
+                }
             }
         }
-        intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)?.let{ produtoCarregado ->
-            title = "Alterar Perfume"
-            idProduto = produtoCarregado.id
-            url = produtoCarregado.imagem
-            binding.activityFormularioProdutoImagem.tentaCarregarImagem(produtoCarregado.imagem)
-            binding.activityFormularioProdutoNome.setText(produtoCarregado.nome)
-            binding.activityFormularioProdutoDescricao.setText(produtoCarregado.descricao)
-            binding.activityFormularioProdutoValor.setText(produtoCarregado.valor.toPlainString())
+    }
 
-
-        }
+    private fun preencheCampos(produto: Produto) {
+        url = produto.imagem
+        binding.activityFormularioProdutoImagem
+            .tentaCarregarImagem(produto.imagem)
+        binding.activityFormularioProdutoNome
+            .setText(produto.nome)
+        binding.activityFormularioProdutoDescricao
+            .setText(produto.descricao)
+        binding.activityFormularioProdutoValor
+            .setText(produto.valor.toPlainString())
     }
 
     private fun configuraBotaoSalvar() {
         val botaoSalvar = binding.activityFormularioProdutoBotaoSalvar
-        val db = AppDatabase.instancia(this)
-        val produtoDao = db.produtoDao()
+
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            if(idProduto > 0){
-                produtoDao.altera(produtoNovo)
-            }else{
+            lifecycleScope.launch {
                 produtoDao.salva(produtoNovo)
+                finish()
             }
-            finish()
         }
     }
 
@@ -72,7 +98,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         return Produto(
-            id = idProduto,
+            id = produtoId,
             nome = nome,
             descricao = descricao,
             valor = valor,

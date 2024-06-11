@@ -1,27 +1,22 @@
 package com.example.niniperfumes.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.niniperfumes.model.Produto
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProdutoDao {
 
     @Query("SELECT * FROM Produto")
-    fun buscaTodos() : List<Produto>
+    fun buscaTodos(): Flow<List<Produto>>
 
-    @Insert
-    fun salva(vararg produto: Produto)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun salva(vararg produto: Produto)
 
     @Delete
-    fun remove(produto: Produto)
-
-    @Update
-    fun altera(produto: Produto)
+    suspend fun remove(produto: Produto)
 
     @Query("SELECT * FROM Produto WHERE id = :id")
-    fun buscaPorId(id: Long?) : Produto?
+    fun buscaPorId(id: Long): Flow<Produto?>
+
 }

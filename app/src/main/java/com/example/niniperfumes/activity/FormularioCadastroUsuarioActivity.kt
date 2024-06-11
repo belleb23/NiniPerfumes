@@ -1,16 +1,22 @@
 package com.example.niniperfumes.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.databinding.ActivityFormularioCadastroUsuarioBinding
 import com.example.niniperfumes.model.Usuario
-
+import kotlinx.coroutines.launch
 
 class FormularioCadastroUsuarioActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityFormularioCadastroUsuarioBinding.inflate(layoutInflater)
+    }
+    private val dao by lazy {
+        AppDatabase.instancia(this).usuarioDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +29,19 @@ class FormularioCadastroUsuarioActivity : AppCompatActivity() {
         binding.activityFormularioCadastroBotaoCadastrar.setOnClickListener {
             val novoUsuario = criaUsuario()
             Log.i("CadastroUsuario", "onCreate: $novoUsuario")
-            finish()
+            lifecycleScope.launch {
+                try {
+                    dao.salva(novoUsuario)
+                    finish()
+                } catch (e: Exception) {
+                    Log.e("CadastroUsuario", "configuraBotaoCadastrar: ", e)
+                    Toast.makeText(
+                        this@FormularioCadastroUsuarioActivity,
+                        "Falha ao cadastrar usuário",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 
@@ -33,5 +51,4 @@ class FormularioCadastroUsuarioActivity : AppCompatActivity() {
         val senha = binding.activityFormularioCadastroSenha.text.toString()
         return Usuario(usuario, nome, senha)
     }
-
 }

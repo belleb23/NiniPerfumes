@@ -2,35 +2,64 @@ package com.example.niniperfumes.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
+import androidx.lifecycle.lifecycleScope
 import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.databinding.ActivityListaProdutosBinding
 import com.example.niniperfumes.recyclerview.adapter.ListaProdutosAdapter
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
+import com.example.niniperfumes.preferences.dataStore
+import com.example.niniperfumes.preferences.usuarioLogadoPreferences
 
 
 class ListaProdutosActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityListaProdutosBinding
-    private val adapter = ListaProdutosAdapter(this)
+    private val adapter = ListaProdutosAdapter(context = this)
+    private val binding by lazy {
+        ActivityListaProdutosBinding.inflate(layoutInflater)
+    }
+
+    private val dao by lazy {
+        val db = AppDatabase.instancia(this)
+        db.produtoDao()
+    }
+
+    private val produtoDao by lazy {
+        val db = AppDatabase.instancia(this)
+        db.produtoDao()
+    }
+
+    private  val usuarioDao by lazy {
+        AppDatabase.instancia(this).usuarioDao()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityListaProdutosBinding.inflate(layoutInflater)
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
-    }
+        lifecycleScope.launch {
+            launch {
+                produtoDao.buscaTodos().collect { produtos ->
+                    adapter.atualiza(produtos)
+                }
+            }
 
-    override fun onResume() {
-        super.onResume()
-        val db = AppDatabase.instancia(this)
-        val produtoDao = db.produtoDao()
-        adapter.atualiza(produtoDao.buscaTodos())
+            dataStore.data.collect { preferences ->
+                preferences[usuarioLogadoPreferences]?.let { usuarioId ->
+                    usuarioDao.buscaPorId(usuarioId).collect {
+                        Log.i("ListaProdutos", "onCreate: $it")
+                    }
+                }
+            }
+        }
     }
 
     private fun configuraFab() {
-        binding.activityListaProdutoFloatingActionButton.setOnClickListener {
+        val fab = binding.activityListaProdutoFloatingActionButton
+        fab.setOnClickListener {
             vaiParaFormularioProduto()
         }
     }
@@ -43,18 +72,13 @@ class ListaProdutosActivity : AppCompatActivity() {
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutoRecyclerView
         recyclerView.adapter = adapter
-
         adapter.quandoClicaNoItem = {
-            val intent = Intent(
-                this,
-                DetalhesProdutoActivity::class.java
-            ).apply {
+            val intent = Intent(this, DetalhesProdutoActivity::class.java).apply {
                 putExtra(CHAVE_PRODUTO_ID, it.id)
             }
-            startActivity(intent)
+            startActivity(intent) // Mova a chamada para startActivity dentro do bloco apply
         }
-
-       // binding.activityListaProdutoRecyclerView.adapter = adapter
-
     }
+
 }
+

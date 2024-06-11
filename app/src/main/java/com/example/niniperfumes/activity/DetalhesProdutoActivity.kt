@@ -6,24 +6,25 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
 import com.example.niniperfumes.R
 import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.databinding.ActivityDetalhesProdutoBinding
 import com.example.niniperfumes.extensions.formataParaMoedaBrasileira
 import com.example.niniperfumes.extensions.tentaCarregarImagem
 import com.example.niniperfumes.model.Produto
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class DetalhesProdutoActivity : AppCompatActivity() {
-
 
     private var produtoId: Long = 0L
     private var produto: Produto? = null
     private val binding by lazy {
         ActivityDetalhesProdutoBinding.inflate(layoutInflater)
     }
-
     private val produtoDao by lazy {
-         AppDatabase.instancia(this).produtoDao()
+        AppDatabase.instancia(this).produtoDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +39,14 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
     private fun buscaProduto() {
-        produto = produtoDao.buscaPorId(produtoId)
-        produto?.let {
-            preencheCampos(it)
-        } ?: finish()
+        lifecycleScope.launch {
+            produtoDao.buscaPorId(produtoId).collect { produtoEncontrado ->
+                produto = produtoEncontrado
+                produto?.let {
+                    preencheCampos(it)
+                } ?: finish()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,25 +55,28 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-            when (item.itemId){
-                R.id.menu_detalhes_produto_remover -> {
-                    produto?.let {produtoDao.remove(it) }
-                    finish()
-                }
-                R.id.menu_detalhes_produto_editar -> {
-                    Intent(this, FormularioProdutoActivity::class.java).apply {
-                        putExtra(CHAVE_PRODUTO, produto)
-                        startActivity(this)
+        when (item.itemId) {
+            R.id.menu_detalhes_produto_remover -> {
+                produto?.let {
+                    lifecycleScope.launch {
+                        produtoDao.remove(it)
+                        finish()
                     }
                 }
-            }
 
+            }
+            R.id.menu_detalhes_produto_editar -> {
+                Intent(this, FormularioProdutoActivity::class.java).apply {
+                    putExtra(CHAVE_PRODUTO_ID, produtoId)
+                    startActivity(this)
+                }
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
     private fun tentaCarregarProduto() {
-       produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
+        produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
     }
 
     private fun preencheCampos(produtoCarregado: Produto) {

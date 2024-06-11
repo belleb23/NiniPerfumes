@@ -14,12 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NiniPerfumes"
         tools:targetApi="31">
+
         <activity
             android:name=".activity.FormularioCadastroUsuarioActivity"
-            android:exported="false" />
+            android:label="Cadastrar usuário" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NiniPerfumes.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,9 +30,9 @@
         </activity>
         <activity android:name=".activity.DetalhesProdutoActivity" />
         <activity android:name=".activity.FormularioProdutoActivity" />
-        <activity
-            android:name=".activity.ListaProdutosActivity"
-            android:exported="false"></activity>
+        <activity android:name=".activity.ListaProdutosActivity" />
+
+
 
         <meta-data
             android:name="preloaded_fonts"

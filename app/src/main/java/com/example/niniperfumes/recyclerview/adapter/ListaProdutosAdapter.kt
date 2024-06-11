@@ -18,7 +18,6 @@ class ListaProdutosAdapter(
 
     private val produtos = produtos.toMutableList()
 
-
     inner class ViewHolder(private val binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
