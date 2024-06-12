@@ -21,16 +21,17 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.NiniPerfumes.NoActionBar">
+            android:theme="@style/Theme.NiniPerfumes.NoActionBar"/>
+        <activity android:name=".activity.DetalhesProdutoActivity" />
+        <activity android:name=".activity.FormularioProdutoActivity" />
+        <activity android:name=".activity.ListaProdutosActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DetalhesProdutoActivity" />
-        <activity android:name=".activity.FormularioProdutoActivity" />
-        <activity android:name=".activity.ListaProdutosActivity" />
 
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.example.niniperfumes.R
 import com.example.niniperfumes.database.AppDatabase
@@ -13,7 +14,11 @@ import com.example.niniperfumes.databinding.ActivityDetalhesProdutoBinding
 import com.example.niniperfumes.extensions.formataParaMoedaBrasileira
 import com.example.niniperfumes.extensions.tentaCarregarImagem
 import com.example.niniperfumes.model.Produto
-import kotlinx.coroutines.flow.collect
+import com.example.niniperfumes.preferences.dataStore
+import com.example.niniperfumes.preferences.usuarioLogadoPreferences
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class DetalhesProdutoActivity : AppCompatActivity() {
@@ -27,11 +32,35 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         AppDatabase.instancia(this).produtoDao()
     }
 
+    private  val usuarioDao by lazy {
+        AppDatabase.instancia(this).usuarioDao()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         tentaCarregarProduto()
+        lifecycleScope.launch {
+            val isAdmin = verificarPermissaoAdministrador()
+            if(!isAdmin){
+                binding.buttonGostei.visibility = View.VISIBLE
+            }
+        }
+
     }
+
+    private suspend fun verificarPermissaoAdministrador(): Boolean {
+        return dataStore.data.map { preferences ->
+            preferences[usuarioLogadoPreferences]?.let { usuarioId ->
+                usuarioDao.buscaPorId(usuarioId).map { usuario ->
+                    usuario.isAdmin
+                }.firstOrNull() ?: false
+            } ?: false
+        }.first()
+    }
+
+
+
 
     override fun onResume() {
         super.onResume()
@@ -49,10 +78,7 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_detalhes_produto, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -73,6 +99,16 @@ class DetalhesProdutoActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        lifecycleScope.launch {
+            val isAdmin = verificarPermissaoAdministrador()
+            if(isAdmin){
+                   menuInflater.inflate(R.menu.menu_detalhes_produto, menu)
+            }
+        }
+        return true
     }
 
     private fun tentaCarregarProduto() {

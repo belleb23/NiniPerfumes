@@ -72,5 +72,27 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_produto_imagem"
             tools:text="R$ 1299,99" />
 
+        <Button
+            android:id="@+id/button_gostei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="240dp"
+            android:elevation="10dp"
+            android:text="Gostei"
+            android:fontFamily="@font/montserrat_bold"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_detalhes_produto_imagem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_produto_imagem"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

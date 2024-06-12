@@ -6,11 +6,13 @@
         android:id="@+id/menu_detalhes_produto_editar"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="Editar"
+        android:visible="true"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_detalhes_produto_remover"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="Remover"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
 </menu>

@@ -10,8 +10,10 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
             CREATE TABLE IF NOT EXISTS `Usuario` (
             `id` TEXT NOT NULL, 
             `nome` TEXT NOT NULL, 
-            `senha` TEXT NOT NULL, PRIMARY KEY(`id`))
-            """)
+            `senha` TEXT NOT NULL,
+            `isAdmin` INTEGER NOT NULL DEFAULT 0, 
+            PRIMARY KEY(`id`))
+        """)
     }
 
 }

@@ -28,7 +28,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        title = "Cadastrar produto"
+        title = "Cadastrar Perfume"
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem.setOnClickListener {
             FormularioImagemDialog(this)
@@ -53,7 +53,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         lifecycleScope.launch {
             produtoDao.buscaPorId(produtoId).collect {
                 it?.let { produtoEncontrado ->
-                    title = "Alterar produto"
+                    title = "Editar Perfume"
                     preencheCampos(produtoEncontrado)
                 }
             }

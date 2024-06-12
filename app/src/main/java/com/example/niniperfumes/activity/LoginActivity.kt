@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.niniperfumes.database.AppDatabase
 import com.example.niniperfumes.preferences.dataStore
 import com.example.niniperfumes.preferences.usuarioLogadoPreferences
+import com.example.niniperfumes.preferences.isAdminPreferences
 import kotlinx.coroutines.launch
 import android.widget.Toast
 
@@ -38,8 +39,10 @@ class LoginActivity : AppCompatActivity() {
                 usuarioDao.autentica(usuario, senha)?.let { usuario ->
                     dataStore.edit { preferences ->
                         preferences[usuarioLogadoPreferences] = usuario.id
+                        preferences[isAdminPreferences] = usuario.isAdmin
                     }
                     vaiPara(ListaProdutosActivity::class.java)
+                    finish()
                 } ?: Toast.makeText(
                     this@LoginActivity,
                     "Falha na autenticação",
@@ -49,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
 
         }
     }
-
 
     private fun configuraBotaoCadastrar() {
         binding.activityLoginBotaoCadastrar.setOnClickListener {
