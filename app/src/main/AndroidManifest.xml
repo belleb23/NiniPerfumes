@@ -14,17 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NiniPerfumes"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activity.ListaFavoritosActivity"
+            android:exported="false" android:label="Perfumes que gostei" />
         <activity
             android:name=".activity.FormularioCadastroUsuarioActivity"
             android:label="Cadastrar usuário" />
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.NiniPerfumes.NoActionBar"/>
+            android:theme="@style/Theme.NiniPerfumes.NoActionBar" />
         <activity android:name=".activity.DetalhesProdutoActivity" />
         <activity android:name=".activity.FormularioProdutoActivity" />
-        <activity android:name=".activity.ListaProdutosActivity"
+        <activity
+            android:name=".activity.ListaProdutosActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
 
         <meta-data
             android:name="preloaded_fonts"

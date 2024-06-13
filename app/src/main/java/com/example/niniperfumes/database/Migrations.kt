@@ -12,6 +12,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
             `nome` TEXT NOT NULL, 
             `senha` TEXT NOT NULL,
             `isAdmin` INTEGER NOT NULL DEFAULT 0, 
+            `favoritos` TEXT DEFAULT '',
             PRIMARY KEY(`id`))
         """)
     }

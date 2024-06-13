@@ -9,5 +9,6 @@ data class Usuario (
     val id: String,
     val nome: String,
     val senha: String,
-    val isAdmin: Boolean = false
+    val isAdmin: Boolean = false,
+    val favoritos: List<Long>? = null
 )

@@ -73,6 +73,10 @@ class ListaProdutosActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.activityListaProdutoFavoritos.setOnClickListener {
+            startActivity(Intent(this, ListaFavoritosActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

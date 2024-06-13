@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.niniperfumes.R
 import com.example.niniperfumes.database.AppDatabase
@@ -31,7 +32,6 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     private val produtoDao by lazy {
         AppDatabase.instancia(this).produtoDao()
     }
-
     private  val usuarioDao by lazy {
         AppDatabase.instancia(this).usuarioDao()
     }
@@ -40,10 +40,12 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         tentaCarregarProduto()
+
         lifecycleScope.launch {
             val isAdmin = verificarPermissaoAdministrador()
             if(!isAdmin){
                 binding.buttonGostei.visibility = View.VISIBLE
+                configuraBtnGostei()
             }
         }
 
@@ -58,9 +60,6 @@ class DetalhesProdutoActivity : AppCompatActivity() {
             } ?: false
         }.first()
     }
-
-
-
 
     override fun onResume() {
         super.onResume()
@@ -77,8 +76,6 @@ class DetalhesProdutoActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -125,4 +122,23 @@ class DetalhesProdutoActivity : AppCompatActivity() {
         }
     }
 
-}
+    private fun configuraBtnGostei() {
+        binding.buttonGostei.setOnClickListener {
+            val produtoAtual = produto // Faz uma cópia imutável do objeto produto atual
+            produtoAtual?.let { produto ->
+                adicionarAosFavoritos(produto.nome)
+            }
+        }
+    }
+
+    private fun adicionarAosFavoritos(nome: String) {
+        lifecycleScope.launch {
+                Toast.makeText(
+                    this@DetalhesProdutoActivity,
+                    "Produto Curtido",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+

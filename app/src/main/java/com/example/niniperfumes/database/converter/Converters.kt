@@ -15,4 +15,14 @@ class Converters {
         return valor?.let { valor.toDouble() }
     }
 
+    @TypeConverter
+    fun fromLongList(value: List<Long>?): String? {
+        return value?.joinToString(separator = ",")
+    }
+
+    @TypeConverter
+    fun toLongList(value: String?): List<Long>? {
+        return value?.split(",")?.map { it.toLong() }
+    }
+
 }
