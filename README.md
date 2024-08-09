@@ -1,63 +1,29 @@
-# NiniPerfumes - Perfume Catalog App
+# Nini Perfumes - Aplicativo de catálogo de Perfumes
 
 <img src="https://github.com/belleb23/NiniPerfumes/assets/115180927/6038ed26-f1d3-43ad-b5eb-7eae270dab1a" alt="Gif App" width="300" height="700"/>
 
-## Features
+## Contexto do Projeto
+Minha mãe pediu minha ajuda para criar um aplicativo Android para divulgar seus produtos, chamado NiniPerfumes. Este aplicativo permite que os usuários explorem um catálogo de perfumes. Existem dois níveis de usuários: administradores e usuários normais.
 
-#### Common Features (Available for Customer and Administrator)
+Administradores: Têm permissões para adicionar, editar e excluir perfumes.
+Usuários Normais: Podem visualizar perfumes e adicionar itens aos seus favoritos.
+O projeto abrange a implementação de autenticação, gerenciamento de dados e uma interface amigável para facilitar a navegação dos usuários.
 
-1. **Login and Registration Screen**
-   - Allows new users to register on the application.
-   - Existing users can log in using their credentials.
+## Objetivo do projeto
 
-2. **User Authentication**
-   - Guarantee of secure access to the application through credential authentication.
+- Desenvolver um aplicativo de catálogo de perfumes com funcionalidades de CRUD (Create, Read, Update, Delete) para administradores.
+- Implementar autenticação e autorização para dois níveis de usuários (administradores e usuários normais).
+- Fornecer uma experiência de usuário intuitiva e moderna.
+- Aplicar práticas recomendadas de desenvolvimento Android.
 
-3. **Logout**
-   - Authenticated users can exit the application at any time, ensuring data security and privacy.
+## Instalação
 
-4. **Perfume List**
-   - Displays a complete list of perfumes registered in the application.
-   - Each perfume is shown with details such as name, description and image.
-
-#### Specific Features for Customers
-
-1. **Favorite Perfumes**
-   - Customers can mark perfumes as favorites for quick and easy access later.
-
-2. **Perfume View**
-   - Customers can view details of each perfume, including name, description, image and price.
-
-3. **Access to the Catalog**
-   - Navigation through the perfume catalog to explore different options available.
-
-#### Specific Functionalities for Administrators
-
-1. **Perfume Creation and Edition**
-   - Administrators can add new perfumes to the catalog.
-   - Allows editing of existing perfume information, such as name, description, image and price.
-
-2. **Perfume Removal**
-   - Administrators have the ability to remove perfumes from the catalog.
-
-## Project technologies
-
-- `Kotlin`: Main programming language used for application development.
-- `Authentication flow with DataStore`: store primitive types via preferences, such as the ID of the authenticated user
-- `Migration`: allow the App to evolve each time Room entities are modified, as they also modify the database schema
-- `Coroutines and Flow`: used to communicate with Room and DataStore
-- `StateFlow`: allow changing the Flow value outside the builder, for example, updating the value when collecting new values ​​from another Flow.
-- `Activity base`: share common code between Activities, such as authentication code that allows access to the logged in user, log out of the App and check whether the user is logged in or not
-- `Relationship in Room`: configure entity to identify which record it belongs to
-
-## Installation Instructions
-
-1. Clone this repository:
+1. Clone esse repositório:
    ```sh
    git clone https://github.com/belleb23/NiniPerfumes.git
    
-2. Open the project in Android Studio.
+2. Abra o projeto no Android Studio.
 
-3. Sync the project with Gradle to download all necessary dependencies.
+3. Sincronize o projeto com Gradle para baixar todas as dependências necessárias.
 
-4. Run the application on an emulator or physical device.
+4. Execute o aplicativo em um emulador ou dispositivo físico.
