@@ -3,11 +3,14 @@
 <img src="https://github.com/belleb23/NiniPerfumes/assets/115180927/6038ed26-f1d3-43ad-b5eb-7eae270dab1a" alt="Gif App" width="300" height="700"/>
 
 ## Contexto do Projeto
-Este aplicativo permite que os usuários explorem um catálogo de perfumes. Existem dois níveis de usuários: administradores e usuários normais.
+Este aplicativo foi desenvolvido como parte da disciplina de Android da pós-graduação em Aplicativos, com o objetivo de proporcionar uma experiência prática no desenvolvimento de aplicações móveis.
 
-Administradores: Têm permissões para adicionar, editar e excluir perfumes.
-Usuários Normais: Podem visualizar perfumes e adicionar itens aos seus favoritos.
-O projeto abrange a implementação de autenticação, gerenciamento de dados e uma interface amigável para facilitar a navegação dos usuários.
+O aplicativo permite que os usuários explorem um catálogo de perfumes, com funcionalidades personalizadas para dois níveis de usuários:
+
+- Administradores: Têm permissões para adicionar, editar e excluir perfumes do catálogo.
+- Usuários Normais: Podem visualizar perfumes e adicionar itens aos seus favoritos.
+  
+O projeto abrange a implementação de autenticação de usuários, gerenciamento de dados e uma interface amigável para facilitar a navegação e interação com o catálogo. Além disso, o aplicativo foi construído com foco em boas práticas de desenvolvimento, seguindo padrões de design para criar uma experiência de usuário intuitiva.
 
 ## Objetivo do projeto
 
