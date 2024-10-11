@@ -3,7 +3,7 @@
 <img src="https://github.com/belleb23/NiniPerfumes/assets/115180927/6038ed26-f1d3-43ad-b5eb-7eae270dab1a" alt="Gif App" width="300" height="700"/>
 
 ## Contexto do Projeto
-Minha mãe pediu minha ajuda para criar um aplicativo Android para divulgar seus produtos, chamado NiniPerfumes. Este aplicativo permite que os usuários explorem um catálogo de perfumes. Existem dois níveis de usuários: administradores e usuários normais.
+Este aplicativo permite que os usuários explorem um catálogo de perfumes. Existem dois níveis de usuários: administradores e usuários normais.
 
 Administradores: Têm permissões para adicionar, editar e excluir perfumes.
 Usuários Normais: Podem visualizar perfumes e adicionar itens aos seus favoritos.
